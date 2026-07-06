@@ -27,6 +27,7 @@ It listens for a wake word, transcribes your voice locally with **Whisper**, rea
 - 🧠 **Local LLM reasoning** via Ollama (`llama3.2:3b`), fully offline
 - 🔊 **Voice replies** via `pyttsx3` text-to-speech
 - 🗣️ **Wake-word activation** — say "Jarvis" to trigger a response
+- ⚡ **Voice-activity detection (VAD)** — listens continuously and detects exactly when you start/stop talking, instead of recording fixed-length clips
 - 🖥️ Runs on modest hardware — tested on a CPU-only laptop, no dedicated GPU required
 
 ## Architecture
@@ -51,7 +52,8 @@ This repo tracks the evolution of the assistant from a basic text chatbot to a w
 | v1 | `jarvis.py` | Text-only chat loop with Ollama + pyttsx3 TTS |
 | v2 | `voice_jarvis.py` | Added voice input — press Enter, record 5s, transcribe with Whisper (`base`) |
 | v3 | `jarvis_real.py` | Continuous listening loop with a "jarvis" wake word |
-| **v4 (latest)** | `jarvis_final.py` | Whisper `small` model for better accuracy, 8s recording window, error handling, startup greeting |
+| v4 | `jarvis_final.py` | Whisper `small` model for better accuracy, 8s recording window, error handling, startup greeting |
+| **v5 (latest)** | `jarvis_realtime.py` | Voice-activity-detection (VAD) based listening — no more fixed recording windows, captures exactly one utterance at a time with pre-roll padding and silence-based cutoff |
 
 ## Requirements
 
@@ -75,7 +77,7 @@ pip install -r requirements.txt
 Run the latest version:
 
 ```bash
-python jarvis_final.py
+python jarvis_realtime.py
 ```
 
 Say **"Jarvis"** followed by your question or command. Say **"stop"**, **"exit"**, or **"shutdown"** to power down.
@@ -94,7 +96,7 @@ Jarvis: The capital of France is Paris.
 
 ## Roadmap
 
-- [ ] Replace fixed-duration recording with voice-activity-detection (VAD) triggered recording
+- [x] Replace fixed-duration recording with voice-activity-detection (VAD) triggered recording
 - [ ] Explore `faster-whisper` for lower CPU latency
 - [ ] Reduce wake-word detection lag
 - [ ] Add custom wake-word support (beyond "jarvis")

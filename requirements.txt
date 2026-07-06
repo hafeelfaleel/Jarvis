@@ -4,3 +4,4 @@ sounddevice
 numpy
 scipy
 openai-whisper
+webrtcvad-wheels
