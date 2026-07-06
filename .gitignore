@@ -1,0 +1,12 @@
+# Audio artifacts generated at runtime
+*.wav
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
